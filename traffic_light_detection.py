@@ -186,7 +186,7 @@ def process_frame(model, frame, tracker, args):
             color = CLASS_COLORS.get(cls_name, (128, 128, 128))
             
         x1, y1, x2, y2 = track.box
-        annotate_box(frame, x1, y1, x2, y2, f"#{track.track_id} {cls_name}", conf, color)
+        annotate_box(frame, x1, y1, x2, y2, cls_name, conf, color)
 
     cv2.putText(frame, "Traffic Light Detections", (30, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 0), 2)
     return frame

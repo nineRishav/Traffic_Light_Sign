@@ -15,12 +15,47 @@ Originally developed as vehicle-testing prototypes coupled to a Basler industria
 
 ---
 
+## 🧠 How It Works (The Pipeline)
+
+### 🚥 Traffic Light Detection Pipeline
+Running raw YOLO detection frame-by-frame on video is notoriously jittery. Objects get partially occluded, confidence scores fluctuate, and false positives appear for a split second. This pipeline solves that by implementing an **IoU-based Tracker (`LightTracker`)**.
+
+```mermaid
+graph TD
+    A[Video Frame / Image] --> B[YOLOv8 Inference]
+    B -->|Bounding Boxes & Confidences| C{Cross-Class NMS}
+    C -->|Filter overlapping states| D[IoU LightTracker]
+    D -->|Match with previous frames| E{Detected for >3 frames?}
+    E -- Yes --> F[Commit New State]
+    E -- No --> G[Hold Previous State]
+    F --> H[Draw Colored Bounding Box]
+    G --> H
+```
+*The system accumulates "evidence" over time (e.g., 3 consecutive frames) before changing the state of a traffic light, mimicking how a human brain processes continuous video to result in a buttery-smooth output!*
+
+### 🛑 Traffic Sign & OCR Pipeline
+This pipeline combines YOLO for sign detection with EasyOCR and intensive preprocessing for reading speed limits.
+
+```mermaid
+graph TD
+    A[Video Frame / Image] --> B[YOLOv8 Inference]
+    B -->|Detected 'Speed Limit' Signs| C[Crop Sign Image]
+    C --> D[OCR Preprocessing]
+    D -->|Upscale, CLAHE, Denoise, Deskew| E[EasyOCR Inference]
+    E -->|Read Digits| F{Whitelist Validation}
+    F -- "Valid Speed (20, 40, 60...)" --> G[Evidence Accumulator]
+    F -- "Invalid / Noise" --> H[Discard Reading]
+    G -->|Confirmed across frames?| I[Draw Speed Limit Bounding Box]
+```
+
+---
+
 ## ✨ Features
 
 ### 🚥 Traffic Light Detection (`traffic_light_detection.py`)
 - **State Recognition:** YOLO-based 4-class traffic light state detection (Red, Yellow, Green, Off).
 - **Cross-Class NMS:** Class-agnostic Non-Maximum Suppression ensures only one state can be reported per physical signal—preventing impossible states (like red and green simultaneously).
-- **Temporal Tracking (`LightTracker`):** A lightweight IoU-based tracker provides temporal confirmation. A light's displayed state only changes after it holds for `--confirm-frames` consecutive frames, drastically reducing single-frame flickering or misclassification.
+- **Temporal Tracking (`LightTracker`):** A lightweight IoU-based tracker provides temporal confirmation drastically reducing single-frame flickering or misclassification.
 - **Dynamic Output Saving:** When saving outputs, it automatically creates unique run directories (e.g., `output_name_1`) containing the full `.mp4` video, an `animated .gif` summary, and a `frames/` folder containing every individual annotated frame.
 
 ### 🛑 Traffic Sign & Speed Limit OCR (`traffic_sign_speed_detection.py`)
@@ -106,13 +141,6 @@ Traffic-Light-And-Sign-Detection/
 ├── data/                            # Sample input images/videos
 └── weights/                         # Directory for your trained .pt weights
 ```
-
----
-
-## 🔬 Design Notes: Why Temporal Tracking?
-Running raw YOLO detection frame-by-frame on video is notoriously jittery. Objects get partially occluded, confidence scores fluctuate, and false positives appear for a split second. 
-
-This repository solves that by implementing an **IoU-based Tracker (`LightTracker`)**. Instead of trusting a single frame, the system remembers where bounding boxes were in previous frames. It accumulates "evidence" over time (e.g., 3 consecutive frames) before changing the state of a traffic light or committing to a speed limit reading. This mimics how a human brain processes continuous video, resulting in a buttery-smooth output!
 
 ---
 
