@@ -1,0 +1,8 @@
+ultralytics>=8.0.0
+opencv-python>=4.8.0
+numpy>=1.24.0
+imageio>=2.30.0
+
+# Optional: only needed for speed-limit OCR in traffic_sign_speed_detection.py.
+# The script runs sign detection fine without it (OCR auto-disables if missing).
+easyocr>=1.7.0
