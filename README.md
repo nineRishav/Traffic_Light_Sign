@@ -99,23 +99,23 @@ Place your trained YOLO weights (`.pt` files) in the `models/` directory or a `w
 
 ```bash
 # Single image (Default Resolution is 832, Conf is 0.50)
-python traffic_light_detection.py --source examples/frame.jpg --model weights/traffic_light.pt --show
+python src/traffic_light_detection.py --source examples/frame.jpg --model weights/traffic_light.pt --show
 
 # Video file, save annotated output (Creates a unique folder with video, frames, and a GIF)
-python traffic_light_detection.py --source examples/drive.mp4 --model weights/traffic_light.pt --save output_light
+python src/traffic_light_detection.py --source examples/drive.mp4 --model weights/traffic_light.pt --save output_light
 
 # Live Webcam
-python traffic_light_detection.py --source 0 --model weights/traffic_light.pt --show
+python src/traffic_light_detection.py --source 0 --model weights/traffic_light.pt --show
 ```
 
 ### 🛑 Traffic Sign / Speed-Limit OCR
 
 ```bash
 # Single image
-python traffic_sign_speed_detection.py --source examples/frame.jpg --sign-model weights/traffic_sign.pt --show
+python src/traffic_sign_speed_detection.py --source examples/frame.jpg --sign-model weights/traffic_sign.pt --show
 
 # Video file, save annotated output
-python traffic_sign_speed_detection.py --source examples/drive.mp4 --sign-model weights/traffic_sign.pt --save output_sign
+python src/traffic_sign_speed_detection.py --source examples/drive.mp4 --sign-model weights/traffic_sign.pt --save output_sign
 ```
 
 ### ⚙️ Key CLI Arguments (Both Scripts)
