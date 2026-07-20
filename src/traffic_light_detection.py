@@ -278,10 +278,10 @@ def main():
                 cv2.imwrite(frame_save_path, out)
                 frame_count += 1
                 
-                # Accumulate every 3rd frame for the GIF (resized to 640 width to save memory)
+                # Accumulate every 3rd frame for the GIF (resized to 1024 width for high quality)
                 if frame_count % 3 == 0:
-                    gif_h = int(h * (640.0 / w))
-                    resized_out = cv2.resize(out, (640, gif_h))
+                    gif_h = int(h * (1024.0 / w))
+                    resized_out = cv2.resize(out, (1024, gif_h))
                     gif_frames.append(cv2.cvtColor(resized_out, cv2.COLOR_BGR2RGB))
 
             if args.show:

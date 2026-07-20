@@ -1,13 +1,30 @@
 # 🚦 Traffic Light & Sign Detection Pipeline
 
+<meta name="description" content="A real-time, hardware-agnostic Traffic Light and Traffic Sign Speed Limit Detection pipeline using YOLOv8, OCR, and IoU temporal tracking. Tested on the S2TLD dataset for small object detection in autonomous driving.">
+
 ![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)
 ![YOLOv8](https://img.shields.io/badge/YOLOv8-Supported-yellow.svg)
 ![OpenCV](https://img.shields.io/badge/OpenCV-4.8.0+-green.svg)
 ![License](https://img.shields.io/badge/License-MIT-purple.svg)
 
+> **SEO Description:** This repository provides an end-to-end computer vision pipeline for autonomous vehicle perception. It performs real-time detection of traffic light states (Red, Yellow, Green, Off) and extracts speed limits from traffic signs using YOLOv8 combined with EasyOCR. Featuring IoU-based temporal tracking and cross-class NMS, it ensures flicker-free, highly accurate state recognition even on small, distant objects like those found in the S2TLD (Small Traffic Light Dataset).
+
 <div align="center">
-  <img src="assets/basler_demo.gif" alt="Traffic Light Detection Demo" width="70%">
+  <img src="assets/basler_demo.gif" alt="Traffic Light Detection Demo" width="100%">
 </div>
+
+---
+
+## 🔬 S2TLD (Small Traffic Light Dataset) Validation
+
+To prove the robustness of the YOLO + Tracking pipeline, it has been validated against the challenging conditions of the **S2TLD Dataset**, which features heavily occluded, distant, and extremely small traffic lights (often under 20x20 pixels).
+
+<div align="center">
+  <img src="assets/s2tld_demo.jpg" alt="S2TLD Dataset Inference Result" width="100%" style="border-radius: 8px;">
+  <p><i>The pipeline successfully detects and classifies distant traffic lights in dense scenarios, maintaining high confidence despite the small pixel footprint.</i></p>
+</div>
+
+---
 
 Real-time and offline detection of traffic light states (Red / Yellow / Green / Off) and traffic sign speed limits (via YOLO + OCR). 
 
