@@ -5,6 +5,10 @@
 ![OpenCV](https://img.shields.io/badge/OpenCV-4.8.0+-green.svg)
 ![License](https://img.shields.io/badge/License-MIT-purple.svg)
 
+<div align="center">
+  <img src="assets/demo_visual.jpg" alt="Traffic Light Detection Demo" width="70%">
+</div>
+
 Real-time and offline detection of traffic light states (Red / Yellow / Green / Off) and traffic sign speed limits (via YOLO + OCR). 
 
 Originally developed as vehicle-testing prototypes coupled to a Basler industrial camera and ROS, this repository is a refined, hardware-agnostic version. It has no ROS or camera-SDK dependencies—the scripts seamlessly accept a **plain image**, a **video file**, or a **webcam index** as input.
