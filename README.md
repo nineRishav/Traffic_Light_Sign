@@ -6,7 +6,7 @@
 ![License](https://img.shields.io/badge/License-MIT-purple.svg)
 
 <div align="center">
-  <img src="assets/demo_visual.jpg" alt="Traffic Light Detection Demo" width="70%">
+  <img src="assets/basler_demo.gif" alt="Traffic Light Detection Demo" width="70%">
 </div>
 
 Real-time and offline detection of traffic light states (Red / Yellow / Green / Off) and traffic sign speed limits (via YOLO + OCR). 

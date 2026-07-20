@@ -299,8 +299,16 @@ def main():
         print(f"Saved {frame_count} frames to {frames_dir}")
         if gif_frames:
             gif_path = os.path.join(run_dir, base_name + ".gif")
-            target_fps = (cap.get(cv2.CAP_PROP_FPS) or 25.0) / 3.0
-            imageio.mimsave(gif_path, gif_frames, fps=target_fps)
+            
+            # Safely calculate fps, falling back to 25 if cv2 returns 0
+            raw_fps = cap.get(cv2.CAP_PROP_FPS)
+            raw_fps = raw_fps if raw_fps > 0 else 25.0
+            
+            target_fps = max(1.0, raw_fps / 3.0)
+            
+            # Save GIF, using duration instead of fps to be safe with newer imageio
+            duration_ms = int(1000.0 / target_fps)
+            imageio.mimsave(gif_path, gif_frames, duration=duration_ms, loop=0)
             print(f"Saved animated GIF to {gif_path}")
 
 
