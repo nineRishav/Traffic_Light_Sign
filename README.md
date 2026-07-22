@@ -95,49 +95,6 @@ conda activate traffic_light
 pip install -r requirements.txt
 ```
 
-### 🧠 Model Weights Setup
-Place your trained YOLO weights (`.pt` files) in the `models/` directory or a `weights/` directory:
-- `traffic_light.pt` — 4-class traffic light model.
-- `traffic_sign.pt` — Traffic sign model (must include a `speed limit-m` class).
-
-*(Note: Model weights are not committed to this repo due to size constraints. Distribute them via GitHub Releases or Git LFS).*
-
----
-
-## 🚀 Usage
-
-### 🚦 Traffic Light Detection
-
-```bash
-# Single image (Default Resolution is 832, Conf is 0.50)
-python traffic_light_detection.py --source examples/frame.jpg --model weights/traffic_light.pt --show
-
-# Video file, save annotated output (Creates a unique folder with video, frames, and a GIF)
-python traffic_light_detection.py --source examples/drive.mp4 --model weights/traffic_light.pt --save output_light
-
-# Live Webcam
-python traffic_light_detection.py --source 0 --model weights/traffic_light.pt --show
-```
-
-### 🛑 Traffic Sign / Speed-Limit OCR
-
-```bash
-# Single image
-python traffic_sign_speed_detection.py --source examples/frame.jpg --sign-model weights/traffic_sign.pt --show
-
-# Video file, save annotated output
-python traffic_sign_speed_detection.py --source examples/drive.mp4 --sign-model weights/traffic_sign.pt --save output_sign
-```
-
-### ⚙️ Key CLI Arguments (Both Scripts)
-- `--conf`: Detection confidence threshold (Default: `0.50`). Lower this if you want to detect partially occluded lights, but beware of false positives!
-- `--imgsz`: Inference resolution (Default: `832`).
-- `--device`: Target compute device (`cpu`, `0` for CUDA, etc.).
-- `--save`: Base name/path for the output directory.
-- `--show`: Display the live annotated output in an OpenCV window.
-- `--confirm-frames`: (Traffic Light) Consecutive frames a state must persist before acceptance (Default: `3`).
-- `--min-agree`, `--expire-frames`, `--no-ocr`: (Traffic Sign) Fine-tuning for the OCR evidence accumulation.
-
 ---
 
 ## 📊 Quantitative Performance & Evaluation
