@@ -140,6 +140,23 @@ python traffic_sign_speed_detection.py --source examples/drive.mp4 --sign-model 
 
 ---
 
+## 🔬 Project Challenges & Solutions
+
+Developing a perception pipeline that performs reliably in real-world driving conditions presents several technical challenges:
+
+| Challenge | Impact on System | Adopted Solution |
+| :--- | :--- | :--- |
+| **Prediction Jitter & Flickering** | A single frame's poor light classification causes the bounding box color/state to alternate rapidly. | **Temporal LightTracker:** An IoU-based tracker that acts as a low-pass filter. It only commits a state change after the model predicts the same state for $N$ (default: `3`) consecutive frames. |
+| **Overlapping State Detections** | YOLO might detect both a "Red" and "Green" state for the same traffic light with high confidences simultaneously. | **Cross-Class NMS:** We run class-agnostic Non-Maximum Suppression to ensure that only the bounding box with the highest confidence is processed per physical location. |
+| **Distant & Small Scale Objects** | In highway or dense urban scenarios, traffic lights are often under $20\times20$ pixels, leading to false negatives. | **Inference Resolution (imgsz=832):** Running YOLO at a higher scale (`832`) specifically optimized for small-object sensitivity without hallucinating false positive classes. |
+| **Distorted or Tilted Sign Text** | Traffic speed signs captured at high angles (or during turning) produce poor text readings in standard OCR. | **Pre-OCR Image Prep:** We apply a robust preprocessing pipeline to the cropped sign (CLAHE, deskewing, denoising, and thresholding) combined with **evidence accumulation** across frames to confirm the speed. |
+
+### 🚀 Further Challenges & Future Work
+- **Night-time / Adverse Weather Transitions:** Extreme lighting (lens flare, glare, rain, night) degrades detection accuracy. Incorporating Domain Adaptation (DA) techniques is planned to generalize across environments.
+- **Latency Optimization:** Real-time embedded platforms (like NVIDIA Jetson) require low latency. Exporting models to TensorRT and optimizing OCR batching will be the next step.
+
+---
+
 ## 🏗️ Repository Structure
 
 ```text
