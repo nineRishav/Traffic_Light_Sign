@@ -20,12 +20,6 @@ The pipeline was validated against images from the **S2TLD Dataset** (SJTU), whi
   <p><i>Animated inference on S2TLD frames. The model correctly identifies light states despite the small pixel footprint and busy urban background.</i></p>
 </div>
 
-| 🔴 Red | 🟢 Green | 🟡 Yellow |
-|:------:|:--------:|:---------:|
-| <img src="assets/s2tld_red.jpg" width="300"> | <img src="assets/s2tld_green.jpg" width="300"> | <img src="assets/s2tld_yellow.jpg" width="300"> |
-
----
-
 Real-time and offline detection of traffic light states (Red / Yellow / Green / Off) and traffic sign speed limits (via YOLO + OCR). 
 
 Originally developed as vehicle-testing prototypes coupled to a Basler industrial camera and ROS, this repository is a refined, hardware-agnostic version. It has no ROS or camera-SDK dependencies—the scripts seamlessly accept a **plain image**, a **video file**, or a **webcam index** as input.
@@ -116,23 +110,23 @@ Place your trained YOLO weights (`.pt` files) in the `models/` directory or a `w
 
 ```bash
 # Single image (Default Resolution is 832, Conf is 0.50)
-python src/traffic_light_detection.py --source examples/frame.jpg --model weights/traffic_light.pt --show
+python traffic_light_detection.py --source examples/frame.jpg --model weights/traffic_light.pt --show
 
 # Video file, save annotated output (Creates a unique folder with video, frames, and a GIF)
-python src/traffic_light_detection.py --source examples/drive.mp4 --model weights/traffic_light.pt --save output_light
+python traffic_light_detection.py --source examples/drive.mp4 --model weights/traffic_light.pt --save output_light
 
 # Live Webcam
-python src/traffic_light_detection.py --source 0 --model weights/traffic_light.pt --show
+python traffic_light_detection.py --source 0 --model weights/traffic_light.pt --show
 ```
 
 ### 🛑 Traffic Sign / Speed-Limit OCR
 
 ```bash
 # Single image
-python src/traffic_sign_speed_detection.py --source examples/frame.jpg --sign-model weights/traffic_sign.pt --show
+python traffic_sign_speed_detection.py --source examples/frame.jpg --sign-model weights/traffic_sign.pt --show
 
 # Video file, save annotated output
-python src/traffic_sign_speed_detection.py --source examples/drive.mp4 --sign-model weights/traffic_sign.pt --save output_sign
+python traffic_sign_speed_detection.py --source examples/drive.mp4 --sign-model weights/traffic_sign.pt --save output_sign
 ```
 
 ### ⚙️ Key CLI Arguments (Both Scripts)
@@ -150,13 +144,21 @@ python src/traffic_sign_speed_detection.py --source examples/drive.mp4 --sign-mo
 
 ```text
 Traffic-Light-And-Sign-Detection/
-├── traffic_light_detection.py       # Main script for traffic lights
-├── traffic_sign_speed_detection.py  # Main script for traffic signs
+├── traffic_light_detection.py       # Traffic light state detection (YOLO + Tracker)
+├── traffic_sign_speed_detection.py  # Traffic sign & speed limit OCR pipeline
+├── evaluate_s2tld.py                # Evaluation script for S2TLD benchmark
+├── albumentation-train.py           # Augmentation training helper
 ├── requirements.txt
 ├── README.md
-├── changes.md                       # Internal changelog
-├── data/                            # Sample input images/videos
-└── weights/                         # Directory for your trained .pt weights
+├── LICENSE
+├── assets/                          # Demo GIFs and images used in README
+│   ├── basler_demo.gif
+│   ├── s2tld_demo.gif
+│   ├── s2tld_red.jpg
+│   ├── s2tld_green.jpg
+│   └── s2tld_yellow.jpg
+├── data/                            # Sample input images/videos (not in repo)
+└── weights/                         # Trained .pt model weights (not in repo)
 ```
 
 ---
