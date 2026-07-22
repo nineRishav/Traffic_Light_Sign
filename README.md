@@ -16,14 +16,13 @@
 The pipeline was validated against images from the **S2TLD Dataset** (SJTU), which features real-world urban scenes with small, distant, and heavily occluded traffic lights — one of the hardest benchmarks for traffic light detection.
 
 <div align="center">
+  <img src="assets/s2tld_demo.gif" alt="S2TLD Dataset Detection Demo" width="100%">
+  <p><i>Animated inference on S2TLD frames. The model correctly identifies light states despite the small pixel footprint and busy urban background.</i></p>
+</div>
 
 | 🔴 Red | 🟢 Green | 🟡 Yellow |
 |:------:|:--------:|:---------:|
 | <img src="assets/s2tld_red.jpg" width="300"> | <img src="assets/s2tld_green.jpg" width="300"> | <img src="assets/s2tld_yellow.jpg" width="300"> |
-
-*Inference results on the official S2TLD collage. The model correctly identifies light states despite the small pixel footprint and busy urban background.*
-
-</div>
 
 ---
 
